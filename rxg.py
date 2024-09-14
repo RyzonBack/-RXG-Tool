@@ -1,3 +1,55 @@
+import os
+import fade
+from fade import *
 
-import base64
-exec(base64.b64decode('aW1wb3J0IG9zCmltcG9ydCBmYWRlCmZyb20gZmFkZSBpbXBvcnQgKgoKIyBCYW5uZXIgZXQgbWVudQpiYW5uZXIgPSAiIiIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4paR4paS4paT4paI4paI4paI4paI4paI4paI4paI4paT4paS4paR4paR4paS4paT4paI4paT4paS4paR4paR4paS4paT4paI4paT4paS4paR4paR4paS4paT4paI4paI4paI4paI4paI4paI4paT4paS4paRICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4paR4paS4paT4paI4paT4paS4paR4paR4paS4paT4paI4paT4paS4paR4paS4paT4paI4paT4paS4paR4paR4paS4paT4paI4paT4paS4paR4paS4paT4paI4paT4paS4paR4paR4paS4paT4paI4paT4paS4paRIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilpHilpLilpPilojilpPilpLilpHilpHilpLilpPilojilpPilpLilpHilpLilpPilojilpPilpLilpHilpHilpLilpPilojilpPilpLilpHilpLilpPilojilpPilpLilpEgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilpHilpLilpPilojilojilojilojilojilojilojilpPilpLilpEg4paR4paS4paT4paI4paI4paI4paI4paI4paI4paT4paS4paR4paR4paS4paT4paI4paT4paS4paS4paT4paI4paI4paI4paT4paS4paRIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilpHilpLilpPilojilpPilpLilpHilpHilpLilpPilojilpPilpLilpHilpLilpPilojilpPilpLilpHilpHilpLilpPilojilpPilpLilpHilpLilpPilojilpPilpLilpHilpHilpLilpPilojilpPilpLilpEgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKWkeKWkuKWk+KWiOKWk+KWkuKWkeKWkeKWkuKWk+KWiOKWk+KWkuKWkeKWkuKWk+KWiOKWk+KWkuKWkeKWkeKWkuKWk+KWiOKWk+KWkuKWkeKWkuKWk+KWiOKWk+KWkuKWkeKWkeKWkuKWk+KWiOKWk+KWkuKWkSAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4paR4paS4paT4paI4paT4paS4paR4paR4paS4paT4paI4paT4paS4paR4paS4paT4paI4paT4paS4paR4paR4paS4paT4paI4paT4paS4paR4paR4paS4paT4paI4paI4paI4paI4paI4paI4paT4paS4paRICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBEaXNjb3JkLmdnL3I0eGd0LWNvbW11bml0eSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiIiIgpiYW5uZXIgPSBmYWRlLmZpcmUoYmFubmVyKQoKbWVudSA9ICIiIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilZTilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZcKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pWRICBbMV0g8J2QiPCdkIMg8J2Qk/CdkI4g8J2Qk/CdkI7wnZCK8J2QhPCdkI0gICAgICAgICBbNl0gTG9hZGluZyAgICAgICDilZEKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pWRICBbMl0g8J2Qk/CdkI7wnZCK8J2QhPCdkI0g8J2QgvCdkIfwnZCE8J2QgvCdkIrwnZCE8J2QkSAgICAgICBbN10gTG9hZGluZyAgICAgICDilZEKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pWRICBbM10g8J2QiPCdkI8g8J2Qi/CdkKjwnZCo8J2QpPCdkK7wnZCpICAgICAgICAgICBbOF0gTG9hZGluZyAgICAgICDilZEKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pWRICBbNF0g8J2QjvCdkJvwnZCf8J2QrvCdkKzwnZCc8J2QmvCdkK3wnZCo8J2QqyAgICAgICAgICBbOV0gTG9hZGluZyAgICAgICDilZEKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pWRICBbNV0gTG9hZGluZyAgICAgICAgICAgICBbwqddIPCdkIzwnZCA8J2Qg/CdkIQg8J2QgfCdkJgg8J2QkeKcl/CdkIYgICDilZEKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pWRICAgICAgICBEaXNjb3JkLmdnL3I0eGd0LWNvbW11bml0eSAgICAgICAgICDilZEKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pWa4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWdIiIiCgptZW51ID0gZmFkZS5maXJlKG1lbnUpCgojIEZvbmN0aW9uIHByaW5jaXBhbGUgcXVpIGJvdWNsZSBzdXIgbGUgbWVudQpkZWYgbWFpbigpOgogICAgd2hpbGUgVHJ1ZTogICMgQm91Y2xlIGluZmluaWUgcG91ciByZXRvdXJuZXIgdG91am91cnMgYXUgbWVudSBhcHLDqHMgdW5lIGNvbW1hbmRlCiAgICAgICAgb3Muc3lzdGVtKCJjbHMiKSAgIyBFZmZhY2UgbCfDqWNyYW4gw6AgY2hhcXVlIHJldG91ciBhdSBtZW51CiAgICAgICAgcHJpbnQoYmFubmVyKQogICAgICAgIHByaW50KCkKICAgICAgICBwcmludChtZW51KQogICAgICAgIGNob2ljZSA9IGlucHV0KCJDaG9peCA6ICIpCgogICAgICAgIGlmIGNob2ljZSA9PSAiMSI6CiAgICAgICAgICAgIG9zLnN5c3RlbSgicHl0aG9uIHByZ20vRklSU1QtVE9LRU4ucHkiKQogICAgICAgICAgICBpbnB1dCgiXG5BcHB1eWV6IHN1ciBFbnRyw6llIHBvdXIgY29udGludWVyLi4uIikgICMgUGF1c2UgYXZhbnQgZGUgcmV2ZW5pciBhdSBtZW51CiAgICAgICAgZWxpZiBjaG9pY2UgPT0gIjIiOgogICAgICAgICAgICBvcy5zeXN0ZW0oInB5dGhvbiBwcmdtL1RPS0VOLUNIRUNLLnB5IikKICAgICAgICAgICAgaW5wdXQoIlxuQXBwdXlleiBzdXIgRW50csOpZSBwb3VyIGNvbnRpbnVlci4uLiIpICAjIFBhdXNlIGF2YW50IGRlIHJldmVuaXIgYXUgbWVudQogICAgICAgIGVsaWYgY2hvaWNlID09ICIzIjoKICAgICAgICAgICAgb3Muc3lzdGVtKCJweXRob24gcHJnbS9JUC1MT09LVVAucHkiKQogICAgICAgICAgICBpbnB1dCgiXG5BcHB1eWV6IHN1ciBFbnRyw6llIHBvdXIgY29udGludWVyLi4uIikgICMgUGF1c2UgYXZhbnQgZGUgcmV2ZW5pciBhdSBtZW51CiAgICAgICAgZWxpZiBjaG9pY2UgPT0gIjQiOgogICAgICAgICAgICBvcy5zeXN0ZW0oInB5dGhvbiBwcmdtL09CU1RSVUNBVE9SLnB5IikKICAgICAgICAgICAgaW5wdXQoIlxuQXBwdXlleiBzdXIgRW50csOpZSBwb3VyIGNvbnRpbnVlci4uLiIpICAjIFBhdXNlIGF2YW50IGRlIHJldmVuaXIgYXUgbWVudQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHByaW50KCJNZXJjaSBkZSByZW50cmVyIHVuIG5vbWJyZSB2YWxpZGUuIikKICAgICAgICAgICAgaW5wdXQoIkFwcHV5ZXogc3VyIEVudHLDqWUgcG91ciByZXZlbmlyIGF1IG1lbnUuLi4iKSAgIyBQYXVzZSBhdmFudCBkZSByZXRvdXJuZXIgYXUgbWVudQoKaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIG1haW4oKQ==').decode('utf-8'))
+# Banner et menu
+banner = """
+                                    ░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░  
+                                    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+                                    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░        
+                                    ░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒▒▓███▓▒░ 
+                                    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+                                    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+                                    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░  
+                                         Discord.gg/r4xgt-community                                                                                                                 
+"""
+banner = fade.fire(banner)
+
+menu = """                              
+                              ╔════════════════════════════════════════════╗
+                              ║  [1] 𝐈𝐃 𝐓𝐎 𝐓𝐎𝐊𝐄𝐍         [6] Loading       ║
+                              ║  [2] 𝐓𝐎𝐊𝐄𝐍 𝐂𝐇𝐄𝐂𝐊𝐄𝐑       [7] Loading       ║
+                              ║  [3] 𝐈𝐏 𝐋𝐨𝐨𝐤𝐮𝐩           [8] Loading       ║
+                              ║  [4] 𝐎𝐛𝐟𝐮𝐬𝐜𝐚𝐭𝐨𝐫          [9] Loading       ║
+                              ║  [5] Loading             [§] 𝐌𝐀𝐃𝐄 𝐁𝐘 𝐑✗𝐆   ║
+                              ║        Discord.gg/r4xgt-community          ║
+                              ╚════════════════════════════════════════════╝"""
+
+menu = fade.fire(menu)
+
+def main():
+    while True:  
+        os.system("cls")  
+        print(banner)
+        print()
+        print(menu)
+        choice = input("Choix : ")
+
+        if choice == "1":
+            os.system("python prgm/FIRST-TOKEN.py")
+            input("\nAppuyez sur Entrée pour continuer...") 
+        elif choice == "2":
+            os.system("python prgm/TOKEN-CHECK.py")
+            input("\nAppuyez sur Entrée pour continuer...")  
+        elif choice == "3":
+            os.system("python prgm/IP-LOOKUP.py")
+            input("\nAppuyez sur Entrée pour continuer...") 
+        elif choice == "4":
+            os.system("python prgm/OBSTRUCATOR.py")
+            input("\nAppuyez sur Entrée pour continuer...")  
+        else:
+            print("Merci de rentrer un nombre valide.")
+            input("Appuyez sur Entrée pour revenir au menu...")  
+
+if __name__ == "__main__":
+    main()
